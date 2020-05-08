@@ -1,49 +1,17 @@
 import React from 'react';
 import { Ul, Table } from './styles';
 import CheckboxField from '../CheckboxField';
-import Toolbar from '../Toolbar';
 import MenuButton from '../MenuButton';
-import Button from '../Button';
-import Content from '../Content';
-import Dialog from '../Dialog';
+import Props from './interface';
 
-const List: React.FC = ({ children }) => {
+
+const List: React.FC<Props> = ({ children }) => {
     return (
         <Ul>
-            <li key={0}>
-                <CheckboxField/>
-                <Table>
-                    <div>ID</div>
-                    <div>Item</div>
-                </Table>
-                <MenuButton/>
-            </li>
-            <li key={0}>
-                <CheckboxField/>
-                <Table>
-                    <div>ID</div>
-                    <div>Item</div>
-                </Table>
-                <MenuButton/>
-            </li>
-            <li key={0}>
-                <CheckboxField/>
-                <Table>
-                    <div>ID</div>
-                    <div>Item</div>
-                </Table>
-                <MenuButton/>
-            </li>
-            <li key={0}>
-                <CheckboxField/>
-                <Table>
-                    <div>ID</div>
-                    <div>Item</div>
-                </Table>
-                <MenuButton/>
-            </li>
+            {children}
         </Ul>
     );
 }
 
 export default List;
+

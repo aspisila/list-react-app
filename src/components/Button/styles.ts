@@ -7,4 +7,5 @@ export const Button = styled.button<Props>`
     color: ${props => props.theme.colors[props.color == 'primary' ? 'primaryColor' : 'secondaryColor']};
     border: 0px;
     margin: 5px;
+    cursor: pointer;
 `;

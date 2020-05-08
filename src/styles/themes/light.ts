@@ -1,12 +1,12 @@
 export default {
     name: 'light',
     colors: {
-        primary: '#102E4A',
+        primary: '#2C365E',
         primaryColor: '#FFF',
-        secondary: '#715AFF',
+        secondary: '#484D6D',
         secondaryColor: '#FFF',
-        basic: '#A682FF',
-        default: '#D8D8D8',
+        basic: '#4B8F8C',
+        default: '#C5979D',
         background: '#FEFEFE',
         color: '#333'
     },

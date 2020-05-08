@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    background: ${(props) => props.theme.colors.primary};
-    color: ${(props) => props.theme.colors.primaryColor};
+    background: ${(props) => props.theme.colors.secondary};
+    color: ${(props) => props.theme.colors.secondaryColor};
     padding: 13px;
     cursor: pointer;
     line-height: 0.1;

@@ -3,22 +3,25 @@ import { Container } from './styles';
 import Paper from '../Paper';
 import Toolbar from '../Toolbar';
 import Button from '../Button/';
+import Props from './interface';
 
-const Dialog: React.FC = ({ children }) => {
+const Dialog: React.FC<Props> = ({ ...props }) => {
     return (
-        <Container>
-            <Paper>
-                { children }
-                <Toolbar footer dialog>
-                    <Button color='secondary'>
-                        Save
-                    </Button>
-                    <Button>
-                        Cancel
-                    </Button>
-                </Toolbar>
-            </Paper>
-        </Container>
+        props.open ? (
+            <Container>
+                <Paper>
+                    { props.children }
+                    <Toolbar footer dialog>
+                        <Button color='secondary'>
+                            Save
+                        </Button>
+                        <Button onClick={() => props.onCancel()}>
+                            Cancel
+                        </Button>
+                    </Toolbar>
+                </Paper>
+            </Container>
+        ) : null
     );
 }
 

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Ul = styled.ul`
     list-style: none;
     flex: 1;
+    overflow-y: scroll;
     
     li {
         background: #fff;

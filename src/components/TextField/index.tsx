@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, ErrorBox } from './styles';
 
 interface Props {
     label?: string;
     labelSeparator?: string;
     type?: 'text' | 'email' | 'password';
+    name?: string;
+    value?: string;
+    onUpdateForm?: any;
+    error?: boolean | string | null | undefined
 }
 
 const TextField: React.FC<Props> = ({ ...props }) => {
+    const [value, setValue] = useState(props.value);
+
     return (
         <Container>
             <label>
@@ -16,10 +22,12 @@ const TextField: React.FC<Props> = ({ ...props }) => {
                 </div>
                 <input
                     type={props.type || 'text'}
+                    onChange={(e) => {setValue(e.target.value); props.onUpdateForm(props.name, e.target.value)}}
+                    value={value}
                 />
             </label>
             <ErrorBox>
-                Invalid value.
+                {props.error}
             </ErrorBox>
         </Container>
     );
