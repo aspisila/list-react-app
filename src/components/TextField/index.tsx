@@ -8,7 +8,8 @@ interface Props {
     name?: string;
     value?: string;
     onUpdateForm?: any;
-    error?: boolean | string | null | undefined
+    error?: boolean | string | null | undefined;
+    autoFocus?: boolean
 }
 
 const TextField: React.FC<Props> = ({ ...props }) => {
@@ -23,7 +24,8 @@ const TextField: React.FC<Props> = ({ ...props }) => {
                 <input
                     type={props.type || 'text'}
                     onChange={(e) => {setValue(e.target.value); props.onUpdateForm(props.name, e.target.value)}}
-                    value={value}
+                    value={value || ''}
+                    autoFocus={props.autoFocus}
                 />
             </label>
             <ErrorBox>

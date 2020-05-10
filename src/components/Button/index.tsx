@@ -4,7 +4,7 @@ import Props from './interface';
 
 const Btn: React.FC<Props> = ({ ...props }) => {
     return (
-        <Button color={props.color || 'primary'} onClick={props.onClick}>
+        <Button color={props.color || 'primary'} onClick={props.onClick} disabled={props.disabled}>
             { props.children || props.text }
         </Button>
     );

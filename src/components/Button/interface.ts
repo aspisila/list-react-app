@@ -1,5 +1,6 @@
 export default interface Props {
     color?: 'primary' | 'secondary' | 'default';
     text?: string;
-    onClick?: () => any
+    onClick?: () => any;
+    disabled?: boolean | undefined;
 }

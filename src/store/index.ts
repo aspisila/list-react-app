@@ -1,4 +1,4 @@
-import { createStore, Reducer, Store, applyMiddleware } from 'redux';
+import { createStore, Store, applyMiddleware } from 'redux';
 import createSagaMiddleware  from 'redux-saga';
 import { ItemsState } from './ducks/Items/types';
 import rootReducer from './ducks/rootReducer';

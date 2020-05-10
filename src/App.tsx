@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './styles/global';
 import { Provider } from 'react-redux';
 import store from './store';
-import Login from './pages/Login';
+// import Login from './pages/Login';
 import Main from './pages/Main';
 import light from './styles/themes/light';
 

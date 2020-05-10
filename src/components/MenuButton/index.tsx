@@ -5,15 +5,7 @@ const MenuButton: React.FC = ({ children }) => {
     return (
         <Container>
             <span>...</span>
-            <ul>
-                <div><span/></div>
-                <li>
-                    Update
-                </li>
-                <li>
-                    Delete
-                </li>
-            </ul>
+            {children}
         </Container>
     );
 }

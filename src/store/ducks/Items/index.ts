@@ -8,6 +8,7 @@ const INITIAL_STATE: ItemsState = {
     adding: false,
     selected: [],
     allSelected: false,
+    msgAlert: '',
     form: {
         employee_name: '',
         errors: {
@@ -24,8 +25,22 @@ const reducer: Reducer<ItemsState> = (state= INITIAL_STATE, action) => {
             return {...state, loading: false, error: false, data: action.payload.data.data};
         case ItemsTypes.LOAD_FAILURE:
             return {...state, loading: false, error: true, data: []};
+        case ItemsTypes.DELETE_REQUEST:
+            return {...state, loading: true, error: false, form: action.payload.item};
+        case ItemsTypes.DELETE_SUCCESS:
+            return {...state, loading: false, error: false, msgAlert: action.payload.response.message};
+        case ItemsTypes.DELETE_FAILURE:
+            return {...state, loading: false, error: true, msgAlert: action.payload.response.message};
+        case ItemsTypes.SAVE_REQUEST:
+            return {...state, loading: true, error: false};
+        case ItemsTypes.SAVE_SUCCESS:
+            return {...state, loading: false, error: false, adding: false,  data: [...state.data, action.payload.data.data], msgAlert: action.payload.response.message};
+        case ItemsTypes.SAVE_FAILURE:
+            return {...state, loading: false, error: true, msgAlert: action.payload.response.message};
         case ItemsTypes.ADD_NEW:
-            return {...state, adding: true};
+            return {...state, adding: true, form: {}};
+        case ItemsTypes.EDIT_ITEM:
+            return {...state, adding: true, form: action.payload.item};
         case ItemsTypes.CANCEL_FORM:
             return {...state, adding: false};
         case ItemsTypes.UPDATE_FORM:
@@ -37,7 +52,7 @@ const reducer: Reducer<ItemsState> = (state= INITIAL_STATE, action) => {
                 return {...state, selected: [...state.selected, action.payload.id]};
             }
             else {
-                return {...state, selected: state.selected.filter(item => item != action.payload.id)};
+                return {...state, selected: state.selected.filter(item => item !== action.payload.id)};
             }
         case ItemsTypes.ALL_SELECTED:
             return {...state, allSelected: action.payload.all};

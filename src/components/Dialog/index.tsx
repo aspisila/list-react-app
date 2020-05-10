@@ -12,7 +12,7 @@ const Dialog: React.FC<Props> = ({ ...props }) => {
                 <Paper>
                     { props.children }
                     <Toolbar footer dialog>
-                        <Button color='secondary'>
+                        <Button color='secondary' onClick={() => props.onSave()}>
                             Save
                         </Button>
                         <Button onClick={() => props.onCancel()}>

@@ -31,7 +31,8 @@ export default function Login() {
                 Items List
             </Header>
             <Content>
-                <Mask show={items.loading} />
+                {/*//TODO: create component*/}
+                {items.error && items.msgAlert ? alert(items.msgAlert) : null}
                 <Toolbar>
                     <CheckboxField
                         label='Select All'
@@ -51,21 +52,39 @@ export default function Login() {
                                 {width > 350 ? <div>{item.id}</div> : null}
                                 <div>{item.employee_name}</div>
                             </Table>
-                            <MenuButton/>
+                            <MenuButton>
+                                <ul>
+                                    <div><span/></div>
+                                    <li onClick={() => dispatch(ItemsActions.editItem(item))}>
+                                        Update
+                                    </li>
+                                    <li onClick={() => dispatch(ItemsActions.deleteRequest(item))}>
+                                        Delete
+                                    </li>
+                                </ul>
+                            </MenuButton>
                         </li>
                     ))}
                 </List>
                 <Toolbar footer>
-                    <Button color='secondary'>
+                    <Button
+                        disabled={!items.selected.length}
+                        color='secondary'
+                        onClick={() => dispatch(ItemsActions.deleteAllRequest())}
+                    >
                         {width > 350 ? 'Delete Selected Items' : 'Del Selected'}
                     </Button>
                     <Button onClick={() => dispatch(ItemsActions.addNew())}>
                         {width > 350 ? 'Add New Item' : 'Add'}
                     </Button>
                 </Toolbar>
-                <Dialog open={items.adding} onCancel={() => dispatch(ItemsActions.cancelForm())}>
+                <Dialog
+                    open={items.adding}
+                    onCancel={() => dispatch(ItemsActions.cancelForm())}
+                    onSave={() => dispatch(ItemsActions.saveForm())}
+                >
                     <div>
-                        <h2>Add/Update Item</h2>
+                        <h2>{items.form?.id ? 'Update' : 'Add'} Item</h2>
                         <div>
                             <TextField
                                 label='Name'
@@ -73,11 +92,13 @@ export default function Login() {
                                 value={items.form?.employee_name}
                                 error={items.form?.errors?.employee_name}
                                 onUpdateForm={(field: any, value: any) => dispatch(ItemsActions.updateForm(field, value))}
-                        />
+                                autoFocus
+                            />
                         </div>
                     </div>
                 </Dialog>
             </Content>
+            <Mask show={items.loading} />
         </MainPage>
     );
 }
