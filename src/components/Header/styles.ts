@@ -8,4 +8,11 @@ export const Container = styled.div`
     font-size: 20px;
     font-weight: bold;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    h2 {
+        flex: 1;
+    }
 `;

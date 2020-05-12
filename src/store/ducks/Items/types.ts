@@ -9,9 +9,11 @@ export enum ItemsTypes {
     DELETE_REQUEST = '@items/DELETE_REQUEST',
     DELETE_ALL_REQUEST = '@items/DELETE_ALL_REQUEST',
     DELETE_SUCCESS = '@items/DELETE_SUCCESS',
+    DELETE_ALL_SUCCESS = '@items/DELETE_ALL_SUCCESS',
     DELETE_FAILURE = '@items/DELETE_FAILURE',
     SAVE_REQUEST = '@items/SAVE_REQUEST',
     SAVE_SUCCESS = '@items/SAVE_SUCCESS',
+    EDIT_SUCCESS = '@items/EDIT_SUCCESS',
     SAVE_FAILURE = '@items/SAVE_FAILURE',
     ADD_NEW = '@items/ADD_NEW',
     EDIT_ITEM = '@items/EDIT_ITEM',
@@ -29,14 +31,14 @@ export enum ItemsTypes {
  */
 export interface Item {
     id: string,
-    employee_name: string
+    name: string
 }
 
 export interface ItemValidator {
     id?: string,
-    employee_name?: string,
+    name?: string,
     errors?: {
-        employee_name?: string | null | undefined
+        name?: string | null | undefined
     }
 }
 

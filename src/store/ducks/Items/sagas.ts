@@ -1,11 +1,16 @@
 import { call, put, select } from 'redux-saga/effects';
+import { getToken } from '../../../Util';
 import api from '../../../services/api';
 import * as act from './actions';
 import { ItemValidator } from './types';
 
+const token = getToken();
+
 export function* load() {
     try {
-        const response = yield call(api.get, '/api/v1/employees');
+        const response = yield call(api.get, '/item', {
+            headers: { Auth: token }
+        });
 
         yield put(act.loadSuccess(response.data));
     }
@@ -17,21 +22,30 @@ export function* load() {
 export function* save() {
     try {
         let form = yield select(state => state.items.form);
-        form.name = form.employee_name; //just to example api
-        const response = yield call(api.post, '/api/v1/create', {
-            data: form
+        const method  = form.id ? api.patch : api.post;
+        const url  = form.id ? `/item/${form.id}` : '/item';
+        const msg  = form.id ? 'editing' : 'saving';
+        const response = yield call(method, url, {
+            ...form
+        },{
+            headers: { Auth: token }
         });
 
-        if(response.status === 'success') {
+        if(response.status === 201) {
             yield put(act.saveSuccess(response.data));
         }
+        else if(response.status === 204) {
+            yield put(act.editSuccess({...form}));
+        }
         else {
-            yield put(act.saveSuccess(response));
+            yield put(act.saveFailure({
+                message: `There was an error ${msg}!`
+            }));
         }
     }
     catch (e) {
         yield put(act.saveFailure({
-            message: 'There was an error saving.'
+            message: `There was an error.`
         }));
     }
 }
@@ -39,13 +53,15 @@ export function* save() {
 export function* deleteItem() {
     try {
         const form = yield select(state => state.items.form);
-        const response = yield call(api.delete, `/api/v1/delete/${form.id}`);
-
-        if(response.status === 'failed') {
-            yield put(act.deleteFailure(response.data));
+        const response = yield call(api.delete, `/item/${form.id}`, {
+            headers: { Auth: token }
+        });
+        console.log('response', response);
+        if(response.status === 204) {
+            yield put(act.deleteSuccess(form.id));
         }
         else {
-            yield put(act.deleteSuccess(response.data));
+            yield put(act.deleteFailure(response.data));
         }
     }
     catch (e) {
@@ -58,13 +74,16 @@ export function* deleteItem() {
 export function* deleteAll() {
     try {
         const items = yield select(state => state.items.selected);
-        const response = yield call(api.delete, '/test', {params: {items: JSON.stringify(items)}});
-
-        if(response.data.status === 'failed') {
-            yield put(act.deleteFailure(response.data));
+        const response = yield call(api.delete, '/item/deleteAll', {
+            data: [...items],
+            headers: { Auth: token }
+        });
+        console.log('response', response);
+        if(response.status === 204) {
+            yield put(act.deleteAllSuccess([...items]));
         }
         else {
-            yield put(act.deleteSuccess(response.data));
+            yield put(act.deleteFailure(response.data));
         }
 
     }
@@ -80,11 +99,11 @@ export function* validate() {
     let form: ItemValidator = {};
     let errors: any = {};
 
-    if(!items.form.employee_name) {
-        errors.employee_name = 'Required field';
+    if(!items.form.name) {
+        errors.name = 'Required field';
     }
-    else if(items.form.employee_name.length < 3) {
-        errors.employee_name = 'Minimum of three characters';
+    else if(items.form.name.length < 3) {
+        errors.name = 'Minimum of three characters';
     }
 
     form.errors = errors;

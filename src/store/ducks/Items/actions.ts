@@ -6,10 +6,12 @@ export const loadSuccess = (data: Item[]) => action(ItemsTypes.LOAD_SUCCESS, { d
 export const loadFailure = () => action(ItemsTypes.LOAD_FAILURE);
 export const deleteRequest = (item: Item) => action(ItemsTypes.DELETE_REQUEST, { item });
 export const deleteAllRequest = () => action(ItemsTypes.DELETE_ALL_REQUEST);
-export const deleteSuccess = (response: any) => action(ItemsTypes.DELETE_SUCCESS, { response });
+export const deleteSuccess = (id: any) => action(ItemsTypes.DELETE_SUCCESS, { id });
+export const deleteAllSuccess = (ids: any) => action(ItemsTypes.DELETE_ALL_SUCCESS, { ids });
 export const deleteFailure = (response: any) => action(ItemsTypes.DELETE_FAILURE, { response });
 export const saveForm = () => action(ItemsTypes.SAVE_REQUEST);
-export const saveSuccess = (response: any) => action(ItemsTypes.SAVE_SUCCESS, { response });
+export const saveSuccess = (data: any) => action(ItemsTypes.SAVE_SUCCESS, { data });
+export const editSuccess = (data: any) => action(ItemsTypes.EDIT_SUCCESS, { data });
 export const saveFailure = (response: any) => action(ItemsTypes.SAVE_FAILURE, { response });
 export const addNew = () => action(ItemsTypes.ADD_NEW);
 export const editItem = (item: Item) => action(ItemsTypes.EDIT_ITEM, { item });

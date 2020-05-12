@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import { MainPage } from './styles';
@@ -11,8 +12,9 @@ import Button from "../../components/Button";
 import Dialog from "../../components/Dialog";
 import TextField from "../../components/TextField";
 import * as ItemsActions from '../../store/ducks/Items/actions';
+import * as UsersActions from '../../store/ducks/Users/actions';
 import { AppState } from '../../store';
-import {Table} from "../../components/List/styles";
+import { Table } from "../../components/List/styles";
 import MenuButton from "../../components/MenuButton";
 import Mask from "../../components/Mask";
 
@@ -28,7 +30,12 @@ export default function Login() {
     return (
         <MainPage>
             <Header>
-                Items List
+                <h2>Items List</h2>
+                <Link to="/" onClick={() => dispatch(UsersActions.logOut())}>
+                    <Button>
+                        Logout
+                    </Button>
+                </Link>
             </Header>
             <Content>
                 {/*//TODO: create component*/}
@@ -50,7 +57,7 @@ export default function Login() {
                             />
                             <Table>
                                 {width > 350 ? <div>{item.id}</div> : null}
-                                <div>{item.employee_name}</div>
+                                <div>{item.name}</div>
                             </Table>
                             <MenuButton>
                                 <ul>
@@ -88,9 +95,9 @@ export default function Login() {
                         <div>
                             <TextField
                                 label='Name'
-                                name='employee_name'
-                                value={items.form?.employee_name}
-                                error={items.form?.errors?.employee_name}
+                                name='name'
+                                value={items.form?.name}
+                                error={items.form?.errors?.name}
                                 onUpdateForm={(field: any, value: any) => dispatch(ItemsActions.updateForm(field, value))}
                                 autoFocus
                             />
