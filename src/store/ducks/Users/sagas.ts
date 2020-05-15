@@ -1,6 +1,8 @@
-import Cookies from 'js-cookie';
 import { call, put, select } from 'redux-saga/effects';
+import history from '../../../history';
+
 import api from '../../../services/api';
+import * as auth from '../../../services/auth';
 import * as act from './actions';
 import { UserValidator } from './types';
 
@@ -11,11 +13,11 @@ export function* login() {
             username: users.form.username,
             password: users.form.password
         });
-        
-        if(response.status === 200) {
-            yield Cookies.set('__session', response.data);
 
+        if(response.status === 200) {
+            yield auth.login(response.data);
             yield put(act.loginSuccess());
+            history.push('/app');
         }
         else {
             yield put(act.loginFailure());
@@ -27,7 +29,7 @@ export function* login() {
 }
 
 export function isAuthenticated() {
-    const jwt = Cookies.get('__session');
+    const jwt = auth.getToken();
     let session;
 
     try {
@@ -46,8 +48,9 @@ export function isAuthenticated() {
     return session;
 }
 
-export function logOut () {
-    Cookies.remove('__session');
+export function* logOut () {
+    yield auth.logout();
+    yield put(act.logOutSuccess());
 }
 
 export function* validateLogin() {

@@ -8,9 +8,7 @@ const token = getToken();
 
 export function* load() {
     try {
-        const response = yield call(api.get, '/item', {
-            headers: { Auth: token }
-        });
+        const response = yield call(api.get, '/item');
 
         yield put(act.loadSuccess(response.data));
     }
@@ -53,10 +51,8 @@ export function* save() {
 export function* deleteItem() {
     try {
         const form = yield select(state => state.items.form);
-        const response = yield call(api.delete, `/item/${form.id}`, {
-            headers: { Auth: token }
-        });
-        console.log('response', response);
+        const response = yield call(api.delete, `/item/${form.id}`);
+
         if(response.status === 204) {
             yield put(act.deleteSuccess(form.id));
         }
@@ -75,10 +71,9 @@ export function* deleteAll() {
     try {
         const items = yield select(state => state.items.selected);
         const response = yield call(api.delete, '/item/deleteAll', {
-            data: [...items],
-            headers: { Auth: token }
+            data: [...items]
         });
-        console.log('response', response);
+
         if(response.status === 204) {
             yield put(act.deleteAllSuccess([...items]));
         }

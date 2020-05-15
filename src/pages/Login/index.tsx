@@ -9,7 +9,7 @@ import CheckboxField from '../../components/CheckboxField';
 import * as UsersActions from '../../store/ducks/Users/actions';
 import Mask from "../../components/Mask";
 
-export default function Login() {
+export default function Login({...props}) {
     const users = useSelector((state: AppState) => state.users);
     const dispatch = useDispatch();
 

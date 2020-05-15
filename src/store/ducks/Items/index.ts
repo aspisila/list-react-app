@@ -1,6 +1,5 @@
 import { Reducer } from 'redux';
 import { ItemsState, ItemsTypes } from './types';
-import { stat } from 'fs';
 
 const INITIAL_STATE: ItemsState = {
     data: [],
@@ -29,7 +28,7 @@ const reducer: Reducer<ItemsState> = (state= INITIAL_STATE, action) => {
         case ItemsTypes.DELETE_REQUEST:
             return {...state, loading: true, error: false, form: action.payload.item};
         case ItemsTypes.DELETE_SUCCESS:
-            return {...state, loading: false, error: false, data: state.data.filter((item) => item.id != action.payload.id)};
+            return {...state, loading: false, error: false, data: state.data.filter((item) => item.id !== action.payload.id)};
         case ItemsTypes.DELETE_ALL_SUCCESS:
             return {...state, loading: false, error: false, data: state.data.filter((item) => !action.payload.ids.includes(item.id))};
         case ItemsTypes.DELETE_FAILURE:
